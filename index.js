@@ -12,7 +12,8 @@ function CounterController ($scope, $ngRedux) {
   // Map Redux actions to component scope
   function mapDispatchToThis (dispatch) {
     return {
-      onIncreaseClick: () => dispatch(increaseAction)
+      onIncreaseClick: () => dispatch(increaseAction),
+      onDecreaseClick: () => dispatch(decreaseAction)
     }
   }
 
@@ -28,12 +29,14 @@ function counterComponent () {
     template: `<div>
       <span>{{counter.value}}</span>
       <button ng-click="counter.onIncreaseClick()">Increase</button>
+      <button ng-click="counter.onDecreaseClick()">Decrease</button>
     </div>`,
     scope: {}
   }
 }
 // Action
 const increaseAction = {type: 'increase'}
+const decreaseAction = {type: 'decrease'}
 
 // Reducer
 function counterReducer (state = {count: 0}, action) {
@@ -41,6 +44,8 @@ function counterReducer (state = {count: 0}, action) {
   switch (action.type) {
     case 'increase':
       return {count: count + 1}
+    case 'decrease':
+      return {count: count - 1}
     default:
       return state
   }
